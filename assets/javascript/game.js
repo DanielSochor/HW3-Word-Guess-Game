@@ -8,7 +8,6 @@ document.onkeypress = function (event) {
         document.getElementById("blink").style.display = "none";
         game();
     }
-
 }
 
 function game() {
