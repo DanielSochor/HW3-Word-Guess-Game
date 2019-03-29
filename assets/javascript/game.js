@@ -6,7 +6,7 @@ var numberOfGuess = 0;
 var wordToGuess = "";
 var alreadyGuessedLetters = "";
 
-document.onkeypress = function (event) {
+document.onkeydown = function (event) {
     var userEntry = event.key;
     if ((userEntry == " ") && (gameInProgress == false)) {
         start();
@@ -25,7 +25,7 @@ function start() {
 
 function game() {
     //var neighborhoods = ["Lincoln Park", "Old Town", "River North"]
-    var neighborhoods = ["lincoln park", "old town", "river north"]
+    var neighborhoods = ["Lincoln Park", "Old Town", "River North"]
     wordToGuess = neighborhoods[Math.floor(Math.random() * neighborhoods.length)];
     console.log(wordToGuess)
     addDashes(wordToGuess);
@@ -49,23 +49,19 @@ function gamePlay(userEntry, wordToGuess) {
         numberOfGuess++;
         alreadyGuessedLetters += (" " + userEntry);
         document.getElementById("guessedLetters").innerHTML = alreadyGuessedLetters;
-        console.log("number of guesses:" + numberOfGuess);
-        if (wordToGuess.includes(userEntry)) {
-            console.log("word includes letter")
+        wordToGuessAllLowerCase = wordToGuess.toLowerCase();
+        if (wordToGuessAllLowerCase.includes(userEntry)) {
             for (i = 0; i < wordToGuess.length; i++) {
-                //newDashedWord = dashedWord
-                if (wordToGuess.charAt(i) == userEntry) {
-                    console.log("position of letter:" + i);
+                if (wordToGuess.charAt(i) == userEntry.toLowerCase() || wordToGuess.charAt(i) == userEntry.toUpperCase()) {
                     subString1 = newDashedWord.substring(0,i);
-                    subString2 = newDashedWord.substring(i+1,dashedWord.length);
-                    console.log(subString1);
-                    console.log(subString2);
-                    newDashedWord = subString1 + userEntry + subString2;
-                    console.log(newDashedWord);
-                    // newDashedWord = dashedWord.replace(dashedWord[i], userEntry);
-                    //console.log(newDashedWord[i]); 
+                    subString2 = newDashedWord.substring(i+1,wordToGuess.length);
+                    fillLetter = wordToGuess.charAt(i);
+                    newDashedWord = subString1 + fillLetter + subString2;
                     document.getElementById("wordToGuess").innerHTML = newDashedWord;
                 }
+            }
+            if(newDashedWord==wordToGuess){
+                alert("You win!")
             }
         } else {
             console.log("word dosen't include letter")
@@ -73,11 +69,9 @@ function gamePlay(userEntry, wordToGuess) {
     }
 }
 
-// function replaceStringCharacter (wordToGuess,userEntry){
-// part1 = wordToGuess.substring()
-// }
-
 //TODO:
+//shoe guessed word with proper case
 //Repeat Game
 //Wins/Losses
-//Alert you win
+//Alert you win in correct position
+//add button to restart game
