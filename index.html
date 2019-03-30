@@ -6,31 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Word Guess</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="../assets/javascript/game.js"></script>
 </head>
 
 <body>
     <div class="center">
 
-        <img src="assets/images/WordGuess.jpg">
+        <img src="assets/images/WheelOfFortune.jpg">
     </div>
     <br><br><br>
     <div class="center">
-        <h1>Guess the Chicago Neighborhood!</h1>
+        <h1>Solve The Puzzle!</h1>
         <br>
         <h3 id="blink"><span class="blink">Press space to begin!</span></h3>
     </div>
-    <br>
     <div class="center">
-        <h3 id="wordToGuessTitle"></h3>
+        <h3 id="phraseToGuessTitle"></h3>
         <br>
-        <h1 id="wordToGuess"></h1>
+        <h1 id="phraseToGuess"></h1>
         <br>
         <h3 id="guessedLettersTitle"></h3>
         <br>
         <h3 id="guessedLetters"></h3>
+        <br>
+        <nav>
+            <div id='wrapper' style='text-align: center;'>
+                <div style='display: inline-block; vertical-align: top;'>
+                    <h3 id="gamesWonTitle"><span></span></h3>
+                    <h3 id="gamesWon"></h3>
+                </div>
+                <div style='display: inline-block; vertical-align: top;'>
+                    <h3 id="gamesLostTitle"><span></span></h3>
+                    <h3 id="gamesLost"></h3>
+                </div>
+        </nav>
     </div>
+    <br>
+    </div>
+    <div class="hideShow center">
+        <button id="newGame" type="button" onclick="initializeGame()">
+            <h2>New Game!</h2>
+        </button>
+    </div>
+
+    <script src="../assets/javascript/game.js"></script>
 </body>
 </body>
 

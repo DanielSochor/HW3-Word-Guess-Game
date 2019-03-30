@@ -1,10 +1,33 @@
 body {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: goldenrod;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-shadow:
+		1px 2px 0 #000;
 }
 
 div.center {
     text-align: center;
+}
+
+nav div{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+button {
+    border-radius: 6px;
+    font-size: 15pt;
+    border: 2px solid #000;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: goldenrod;
+    text-shadow:
+    1px 2px 0 #000;
+}
+
+button:hover {
+    background-color: goldenrod;
+    color:white;
 }
 
 @-webkit-keyframes blinker {
