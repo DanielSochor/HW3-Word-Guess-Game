@@ -1,9 +1,10 @@
 
-// Thank you for preordering Wheel of Fortune!!!!! 
-// Currently it's in beta
+// Thank you for preordering Wheel of Fortune** !!!!!
+// ** Denotes beta
 
 // Here are the Special Features!:
 // -Handles phrases not just single words
+// -Game understands if letter has already been selected
 // -Only accepts alphanumeric characters
 // -Handles upper and lower case condition of each letter
 // -Each task is broken down into separate functions with very clear names
@@ -18,11 +19,20 @@ var alreadyGuessedLetters = "";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
 var gamesWon = 0;
 var gamesLost = 0;
-var phrases = ["Have it your way","See if I care","Not everyone is a winner","Mistakes happen","Second place is first loser"]
 document.getElementById("newGame").style.visibility = "hidden";
 var newPuzzle = new Audio("assets/sounds/Puzzle Reveal.mp3");
 var solvePuzzle = new Audio("assets/sounds/Puzzle Solve.mp3");
 var failPuzzle = new Audio("assets/sounds/Puzzle Fail.mp3");
+var phrases = ["Have it your way",
+    "See if I care",
+    "Not everyone is a winner",
+    "Mistakes happen",
+    "Second place is first loser",
+    "A fool and his money are soon parted",
+    "Close but no ciger",
+    "Do not count your chickens before they hatch",
+    "Everything but the kitchen sink",
+    "Short end of the stick"]
 
 document.onkeydown = function (event) {
     var userEntry = event.key;
@@ -30,7 +40,11 @@ document.onkeydown = function (event) {
         document.getElementById("blink").style.display = "none";
         initializeGame();
     } else if (gameInProgress == true) {
-        gamePlay(userEntry, phraseToGuess);
+        if (remainingGuesses > 0) {
+            gamePlay(userEntry, phraseToGuess);
+        } else {
+            gameFail()
+        }
     }
 }
 
@@ -45,17 +59,17 @@ function initializeGame() {
     document.getElementById("gamesLostTitle").innerHTML = "Games Lost: ";
     document.getElementById("gamesWon").innerHTML = gamesWon;
     document.getElementById("gamesLost").innerHTML = gamesLost;
-    document.getElementById("newGame").style.visibility = "hidden";
     gameStart();
 }
 
 function gameStart() {
-    newPuzzle.play();
+    remainingGuesses = 10;
+    document.getElementById("newGame").style.visibility = "hidden";
     document.getElementById("guessedLetters").innerHTML = "";
+    newPuzzle.play();
     phraseToGuess = "";
     alreadyGuessedLetters = "";
     dashedWord = "";
-    numberOfGuesses = 0;
     console.log("Start new game!");
     phraseSelector();
     gamePlay();
@@ -72,19 +86,15 @@ function addDashes(phraseToGuess) {
         if (phraseToGuess.charAt(i) == " ") {
             dashedWord += " "
         } else {
-            // dashedWord += "&nbsp;-&nbsp;"
             dashedWord += "_"
         }
     }
     newDashedWord = dashedWord;
     document.getElementById("phraseToGuess").innerHTML = dashedWord;
-    maximumNumberOfGuesses = Math.max(10, (phraseToGuess.length)*0.5);
-    console.log(maximumNumberOfGuesses);
 }
 
 function gamePlay(userEntry, phraseToGuess) {
     if ((!alreadyGuessedLetters.includes(userEntry)) && (newDashedWord != phraseToGuess) && (alphabet.includes(userEntry))) {
-        //numberOfGuesses ++;
         alreadyGuessedLetters += (" " + userEntry);
         document.getElementById("guessedLetters").innerHTML = alreadyGuessedLetters;
         phraseToGuessAllLowerCase = phraseToGuess.toLowerCase();
@@ -100,30 +110,27 @@ function gamePlay(userEntry, phraseToGuess) {
             }
         } else {
             console.log("word dosen't include letter")
-            remainingGuesses = remainingGuesses -1;
+            remainingGuesses = remainingGuesses - 1;
             document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
         }
     }
     if ((newDashedWord == phraseToGuess) && (userEntry != " ")) {
-        gameInProgress = false;
-        solvePuzzle.play();
-        alert("You Win!")
-        gamesWon ++;
-        document.getElementById("gamesWon").innerHTML = gamesWon;
-        document.getElementById("newGame").style.visibility = "visible";
+        gameWin();
     }
-    if ((remainingGuesses == 0) && (userEntry != " ")){
-        gameInProgress = false;
-        failPuzzle.play();
-        alert("You Fail")
-        gamesLost ++;
-        document.getElementById("gamesLost").innerHTML = gamesLost;
-        document.getElementById("newGame").style.visibility = "visible";
-    }
-
 }
 
-//TODO:
-//give a clue
-//more phrases
-//show answer if failed
+function gameWin() {
+    solvePuzzle.play();
+    gamesWon++;
+    document.getElementById("gamesWon").innerHTML = gamesWon;
+    document.getElementById("newGame").style.visibility = "visible";
+    alert("You Win!")
+}
+
+function gameFail() {
+    failPuzzle.play();
+    gamesLost++;
+    document.getElementById("gamesLost").innerHTML = gamesLost;
+    document.getElementById("newGame").style.visibility = "visible";
+    alert("You Fail")
+}
