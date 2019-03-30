@@ -2,8 +2,7 @@
 var gameInProgress = false;
 var dashedWord = "";
 var newDashedWord = "";
-var numberOfGuesses = 0;
-var maximumNumberOfGuesses = 0;
+var remainingGuesses = 10;
 var phraseToGuess = "";
 var alreadyGuessedLetters = "";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -31,6 +30,8 @@ function initializeGame() {
     document.getElementById("blink").style.display = "none";
     document.getElementById("phraseToGuessTitle").innerHTML = "Phrase To Guess:";
     document.getElementById("guessedLettersTitle").innerHTML = "Guessed Letters:";
+    document.getElementById("remainingGuessesTitle").innerHTML = "Remaining Guesses:";
+    document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
     document.getElementById("gamesWonTitle").innerHTML = "Games Won: ";
     document.getElementById("gamesLostTitle").innerHTML = "Games Lost: ";
     document.getElementById("gamesWon").innerHTML = gamesWon;
@@ -60,7 +61,7 @@ function phraseSelector() {
 function addDashes(phraseToGuess) {
     for (i = 0; i < phraseToGuess.length; i++) {
         if (phraseToGuess.charAt(i) == " ") {
-            dashedWord += " "
+            dashedWord += "  "
         } else {
             dashedWord += "-"
         }
@@ -73,7 +74,7 @@ function addDashes(phraseToGuess) {
 
 function gamePlay(userEntry, phraseToGuess) {
     if ((!alreadyGuessedLetters.includes(userEntry)) && (newDashedWord != phraseToGuess) && (alphabet.includes(userEntry))) {
-        numberOfGuesses ++;
+        //numberOfGuesses ++;
         alreadyGuessedLetters += (" " + userEntry);
         document.getElementById("guessedLetters").innerHTML = alreadyGuessedLetters;
         phraseToGuessAllLowerCase = phraseToGuess.toLowerCase();
@@ -89,6 +90,8 @@ function gamePlay(userEntry, phraseToGuess) {
             }
         } else {
             console.log("word dosen't include letter")
+            remainingGuesses = remainingGuesses -1;
+            document.getElementById("remainingGuesses").innerHTML = remainingGuesses;
         }
     }
     if ((newDashedWord == phraseToGuess) && (userEntry != " ")) {
@@ -98,7 +101,8 @@ function gamePlay(userEntry, phraseToGuess) {
         document.getElementById("gamesWon").innerHTML = gamesWon;
         document.getElementById("newGame").style.visibility = "visible";
     }
-    if ((numberOfGuesses == maximumNumberOfGuesses) && (userEntry != " ")){
+    if ((remainingGuesses == 0) && (userEntry != " ")){
+        //gameInProgress = false;
         failPuzzle.play();
         alert("You Fail")
         gamesLost ++;
@@ -112,4 +116,4 @@ function gamePlay(userEntry, phraseToGuess) {
 //fix font
 //more phrases
 //show answer
-//adjust button
+//correct answer don't count towards mistakes
