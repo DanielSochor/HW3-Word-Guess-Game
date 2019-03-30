@@ -1,4 +1,14 @@
 
+// Thank you for preordering Wheel of Fortune!!!!! 
+// Currently it's in beta
+
+// Here are the Special Features!:
+// -Handles phrases not just single words
+// -Only accepts alphanumeric characters
+// -Handles upper and lower case condition of each letter
+// -Each task is broken down into separate functions with very clear names
+// -We're tried to make the job of the TA easier
+
 var gameInProgress = false;
 var dashedWord = "";
 var newDashedWord = "";
@@ -8,8 +18,7 @@ var alreadyGuessedLetters = "";
 var alphabet = "abcdefghijklmnopqrstuvwxyz";
 var gamesWon = 0;
 var gamesLost = 0;
-//var phrases = ["Lincoln Park", "Old Town", "River North"];
-var phrases = ["Have it your way","See if I care","Not everyone is a winner","Mistakes happen"]
+var phrases = ["Have it your way","See if I care","Not everyone is a winner","Mistakes happen","Second place is first loser"]
 document.getElementById("newGame").style.visibility = "hidden";
 var newPuzzle = new Audio("assets/sounds/Puzzle Reveal.mp3");
 var solvePuzzle = new Audio("assets/sounds/Puzzle Solve.mp3");
@@ -61,9 +70,10 @@ function phraseSelector() {
 function addDashes(phraseToGuess) {
     for (i = 0; i < phraseToGuess.length; i++) {
         if (phraseToGuess.charAt(i) == " ") {
-            dashedWord += "  "
+            dashedWord += " "
         } else {
-            dashedWord += "-"
+            // dashedWord += "&nbsp;-&nbsp;"
+            dashedWord += "_"
         }
     }
     newDashedWord = dashedWord;
@@ -95,6 +105,7 @@ function gamePlay(userEntry, phraseToGuess) {
         }
     }
     if ((newDashedWord == phraseToGuess) && (userEntry != " ")) {
+        gameInProgress = false;
         solvePuzzle.play();
         alert("You Win!")
         gamesWon ++;
@@ -102,7 +113,7 @@ function gamePlay(userEntry, phraseToGuess) {
         document.getElementById("newGame").style.visibility = "visible";
     }
     if ((remainingGuesses == 0) && (userEntry != " ")){
-        //gameInProgress = false;
+        gameInProgress = false;
         failPuzzle.play();
         alert("You Fail")
         gamesLost ++;
@@ -113,7 +124,6 @@ function gamePlay(userEntry, phraseToGuess) {
 }
 
 //TODO:
-//fix font
+//give a clue
 //more phrases
-//show answer
-//correct answer don't count towards mistakes
+//show answer if failed

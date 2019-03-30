@@ -15,6 +15,15 @@ nav div{
     padding-right: 10px;
 }
 
+#phraseToGuess {
+    letter-spacing: 0.3em;
+}
+/* can also box character */
+
+#guessedLetters {
+    letter-spacing: 0.2em;
+}
+
 button {
     border-radius: 6px;
     font-size: 15pt;
